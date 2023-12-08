@@ -122,7 +122,7 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                         ),
                       ),
                       Positioned(
-                        top: 236,
+                        top: 230,
                         left: 25,
                         child: Text(roomData['title'],
                             style: whitew700.copyWith(
@@ -130,12 +130,22 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                             )),
                       ),
                       Positioned(
-                        top: 236,
-                        left: 200,
-                        child: Text(
-                          roomData['code'],
-                          style: whitew700.copyWith(
-                            fontSize: 24.0,
+                        top: 270,
+                        left: 170,
+                        child: Container(
+                          width: 100,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(3), // 반지름 값을 설정합니다.
+                            color: const Color.fromRGBO(227, 255, 217, 1),
+                          ),
+                          child: Center(
+                            child: Text('팀 코드 | ${roomData['code']}',
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(36, 137, 0, 1),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14)),
                           ),
                         ),
                       ),
@@ -143,25 +153,19 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                         top: 270,
                         left: 25,
                         child: Container(
-                          width: 159,
+                          width: 130,
                           height: 35,
                           decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(3), // 반지름 값을 설정합니다.
-                            color: const Color.fromRGBO(255, 239, 244, 1),
+                            color: const Color.fromRGBO(227, 255, 217, 1),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(left: 12, bottom: 3),
-                                child: Text(roomData['mission'],
-                                    style: pinkw700.copyWith(
-                                      fontSize: 16.0,
-                                    )),
-                              ),
-                            ],
+                          child: Center(
+                            child: Text(roomData['mission'],
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(36, 137, 0, 1),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14)),
                           ),
                         ),
                       ),

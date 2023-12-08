@@ -22,25 +22,84 @@ class _NameInputDialogState extends State<NameInputDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('이름 입력'),
-      content: TextField(
-        controller: _nameController,
-        decoration: const InputDecoration(labelText: '이름'),
+      shadowColor: Colors.transparent,
+      contentPadding: const EdgeInsets.all(0), // padding을 0으로 설정
+      insetPadding: const EdgeInsets.all(16), // 화면 주변 padding 설정
+      backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context); // 닫기 버튼
-          },
-          child: const Text('취소'),
+      content: SizedBox(
+        width: 343, // 원하는 가로 길이 설정
+        height: 200, // 원하는 세로 길이 설정
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 10),
+              Text("이름을 입력해 주세요", style: blackw500.copyWith(fontSize: 18)),
+              Container(
+                width: 180, // 너비 조절
+                child: TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black45),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black45),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 131,
+                    height: 35,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        backgroundColor: const Color(0xFF808080),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6), // 모서리 반경 설정
+                        ),
+                      ),
+                      child:
+                          Text("취소", style: whitew700.copyWith(fontSize: 14)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 131,
+                    height: 35,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6), // 모서리 반경 설정
+                        ),
+                      ),
+                      child:
+                          Text("확인", style: whitew700.copyWith(fontSize: 14)),
+                      onPressed: () {
+                        Navigator.pop(
+                            context, _nameController.text); // 입력한 이름 반환
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context, _nameController.text); // 입력한 이름 반환
-          },
-          child: const Text('확인'),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -121,6 +180,14 @@ class _LoginPageScreenState extends State<LoginPage> {
         context: context,
         builder: (context) => const NameInputDialog(),
       );
+
+      // username이 null인지 확인
+      if (username == null) {
+        // username이 null인 경우 처리 (예: 사용자가 입력 취소한 경우)
+        debugPrint("Username이 null입니다. 로그인 프로세스를 중단합니다.");
+        return;
+      }
+
       UserProvider.userName = username;
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
       final db = FirebaseFirestore.instance;
@@ -137,10 +204,10 @@ class _LoginPageScreenState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
-          debugPrint("Anonymous auth hasn't been enabled for this project.");
+          debugPrint("프로젝트에서 익명 인증이 활성화되지 않았습니다.");
           break;
         default:
-          debugPrint("Unknown error.");
+          debugPrint("알 수 없는 오류가 발생했습니다.");
       }
     }
   }
