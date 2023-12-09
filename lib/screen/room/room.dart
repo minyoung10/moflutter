@@ -332,33 +332,34 @@ class _RoomState extends State<Room> with SingleTickerProviderStateMixin {
                 width: double.infinity,
                 height: 200,
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 25, top: 25),
-                        child: const Text(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const Text(
                           '멤버',
                           style: TextStyle(
                               fontFamily: 'Pretendard',
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.w700,
                               letterSpacing: -1),
                         ),
-                      ),
-                      for (var userName in usersNameList)
-                        Row(
-                          children: [
-                            Text(
-                              userName.toString(),
-                              style: blackw700.copyWith(fontSize: 20),
-                            ),
-                            Text(
-                              ' ${usersJob[userName.toString()]}',
-                              style: blackw500.copyWith(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                    ],
+                        const SizedBox(height: 10),
+                        for (var userName in usersNameList)
+                          Row(
+                            children: [
+                              Text(
+                                userName.toString(),
+                                style: blackw700.copyWith(fontSize: 20),
+                              ),
+                              Text(
+                                ' ${usersJob[userName.toString()]}',
+                                style: blackw500.copyWith(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               );
